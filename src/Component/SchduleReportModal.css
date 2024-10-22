@@ -16,16 +16,11 @@
   border-radius: 8px;
   width: 700px;
   height: 700px;
-
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
-/* .modal-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 60%;
-  margin-left: 50px;
-} */
+ 
 
 .cancel-button {
   width: 20%;
