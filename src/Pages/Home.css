@@ -1,0 +1,33 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #161111;
+  }
+  
+  button {
+    margin-top: 30px;
+    padding: 15px 20px;
+    font-size: 20px;
+    background-color: #007bff;
+    color: rgb(245, 239, 239);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-items: center;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+ 

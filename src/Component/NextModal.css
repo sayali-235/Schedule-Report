@@ -1,0 +1,99 @@
+/* General Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgb(250, 242, 242);
+  padding: 20px;
+  border-radius: 8px;
+  width: 700px;
+  height: 700px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  .modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+     
+  }
+  
+  .modal-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .modal-content ul li {
+    margin-bottom: 10px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Button Styling */
+  .backn-button {
+     
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #0a0ef1;
+    color: white;
+    font-size: 14px;
+    width: 20%;
+    margin-left: 50%;
+    
+  }
+  .done-button {
+     
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #0686f0;
+    color: white;
+    font-size: 14px;
+    width: 20%;
+    margin-right: 10px;
+  }
+  
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+ 
+  .react-datepicker-wrapper {
+    display: inline-block;
+  }
+  
+  .react-datepicker__input-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .react-datepicker {
+    font-size: 14px;
+  }
+  
+  .in-radio{
+    display: flex;
+    font-size: 15px;
+    flex: 1;
+  }
