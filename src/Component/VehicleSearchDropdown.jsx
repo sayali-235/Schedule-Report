@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './VehicleSearchDropdown.css';
 
-const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect}) => {
-
-  
+const VehicleSearchDropdown = ({ vehicles = [], onVehicleSelect }) => {
   const [selectedBranch, setSelectedBranch] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedVehicles, setSelectedVehicles] = useState([]);
@@ -19,24 +17,21 @@ const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect}) => {
   };
 
   const handleVehicleSelection = (vehicle) => {
-    const isSelected = selectedVehicles.some((v) => v.vin === vehicle.vin );
+    const isSelected = selectedVehicles.some((v) => v.vin === vehicle.vin);
     const updatedVehicles = isSelected
-      ? selectedVehicles.filter((v) => v.vin !== vehicle.vin)  
-      : [...selectedVehicles,  vehicle];  
- console.log("updated selected vehicles:",updatedVehicles)
+      ? selectedVehicles.filter((v) => v.vin !== vehicle.vin)
+      : [...selectedVehicles, vehicle];
+    console.log("updated selected vehicles:", updatedVehicles)
     setSelectedVehicles(updatedVehicles);
-      //  console.log("selected vehiles: ",selectedVehicles)
-      onVehicleSelect(updatedVehicles);
+    onVehicleSelect(updatedVehicles);
   };
 
-   
   const filteredVehicles = vehicles.filter((vehicle) =>
     (vehicle.vin.toLowerCase().includes(searchTerm.toLowerCase()) ||
       vehicle.registration_number.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (selectedBranch ? vehicle.branch === selectedBranch : true)
   );
 
-   
   const sortedVehicles = filteredVehicles.sort((a, b) =>
     a.branch.localeCompare(b.branch)
   );
@@ -75,7 +70,7 @@ const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect}) => {
             </li>
           ))
         ) : (
-          <li>No vehicles found.</li> //  
+          <li>No vehicles found.</li> 
         )}
       </ul>
     </div>

@@ -4,22 +4,25 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import SummaryModal from './SummaryModal';
 import './NextModal.css';
- 
+
 
 const NextModal = (props) => {
-  const { emailList=[], selectedReports={}, onBack,  selectedVehicles=[] } = props;
+  const { emailList, selectedReports, onBack, selectedVehicle} = props;
   const [scheduleDate, setScheduleDate] = useState(null);
-  const [reportType, setReportType] = useState(); 
+  const [reportType, setReportType] = useState();
   const [selectedDay, setSelectedDay] = useState("");
   const [skipWeekends, setSkipWeekends] = useState(false);
   const [quarterOption, setQuarterOption] = useState("");
   const [yearOption, setYearOption] = useState("");
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-const [customDate, setCustomDate] =useState(null)
-const [time, setTime]=useState(false)
+  const [customDate, setCustomDate] = useState(null)
+  const [time, setTime] = useState(false)
 
   useEffect(() => {
-     
+    console.log(props);
+  }, [props]);
+
+  useEffect(() => {
     if (reportType === 'yearly') {
       getLastDayOfCurrentYear();
       getFirstDayOfCurrentYear();
@@ -28,10 +31,10 @@ const [time, setTime]=useState(false)
       getFirstDayOfNextQuarter();
     }
   }, [reportType]);
-
-const handleTimeChange=(option)=>{
-  setTime(option)
-}
+  
+  const handleTimeChange = (option) => {
+    setTime(option)
+  }
   const handleReportTypeChange = (option) => {
     setScheduleDate(null);
     setReportType(option);
@@ -61,7 +64,7 @@ const handleTimeChange=(option)=>{
     { label: 'Quarterly', value: 'quarterly' },
     { label: 'Yearly', value: 'yearly' }
   ];
-  
+
   const daysOfWeek = [
     { key: 'Monday', value: 'monday' },
     { key: 'Tuesday', value: 'tuesday' },
@@ -69,12 +72,40 @@ const handleTimeChange=(option)=>{
     { key: 'Thursday', value: 'thursday' },
     { key: 'Friday', value: 'friday' }
   ];
-  
-  const timeOfSchedule =[
-    {key :'9am', value:'9am'},
-    {key :'5pm', value:'5pm'}
+
+  const timeOfSchedule = [
+    { key: '9am', value: '9am' },
+    { key: '5pm', value: '5pm' }
   ]
 
+  function getNextDayOfWeek(selectedDay) {
+    const daysOfWeek = {
+      "sunday": 0,
+      "monday": 1,
+      "tuesday": 2,
+      "wednesday": 3,
+      "thursday": 4,
+      "friday": 5,
+      "saturday": 6
+    };
+  
+    const today = new Date();
+    const todayDayOfWeek = today.getDay();
+
+    const targetDay = daysOfWeek[selectedDay.toLowerCase()];
+  
+    if (targetDay === undefined) {
+      return "Invalid day of the week!";
+    }
+  
+    const daysUntilNext = (targetDay - todayDayOfWeek + 7) % 7 || 7;
+  
+    const nextDate = new Date(today);
+    nextDate.setDate(today.getDate() + daysUntilNext);
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    return nextDate.toLocaleDateString('en-US', options);
+  }
+  
   const renderDayOptions = () => (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       {daysOfWeek.map((day) => (
@@ -85,17 +116,20 @@ const handleTimeChange=(option)=>{
             value={day.value}
             name="day"
             checked={selectedDay === day.value}
-            onChange={() => setSelectedDay(day.value)}
-            />
+            onChange={() => {
+              setSelectedDay(day.value)
+              setScheduleDate(getNextDayOfWeek(day.value));
+            }}
+          />
         </div>
       ))}
     </div>
   );
-  
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
 
   const renderCalendarForMonth = () => {
     const today = new Date();
@@ -117,25 +151,25 @@ const handleTimeChange=(option)=>{
     );
   };
 
-  
+
   const setYear = (option) => {
     if (option === "last-day-year") {
       const lastDay = getLastDayOfCurrentYear();
       setScheduleDate(lastDay);
     }
-    
+
     if (option === "first-day-next-year") {
       const firstDay = getFirstDayOfCurrentYear();
       setScheduleDate(firstDay);
     }
-    
+
     if (option === "custom") {
       setScheduleDate(customDate);
     }
-    
+
     setYearOption(option);
   };
-  
+
   const getLastDayOfCurrentYear = () => {
     const date = new Date();
     const lastDay = new Date(date.getFullYear(), 11, 31);
@@ -144,7 +178,7 @@ const handleTimeChange=(option)=>{
     const year = lastDay.getFullYear();
     return `${day} ${month} ${year}`;
   };
-  
+
   const getFirstDayOfCurrentYear = () => {
     const date = new Date();
     const firstDay = new Date(date.getFullYear(), 0, 1);
@@ -153,7 +187,7 @@ const handleTimeChange=(option)=>{
     const year = firstDay.getFullYear();
     return `${day} ${month} ${year}`;
   };
-  
+
   const getYearOptions = () => (
     <div>
       <select value={yearOption} onChange={(e) => setYear(e.target.value)}>
@@ -169,11 +203,11 @@ const handleTimeChange=(option)=>{
   //Quarterly
   const setQuar = (option) => {
     if (option === "last-day-completed-quarter") {
-      const lastDay=getLastDayOfCompletedQuarter()
-      setScheduleDate( lastDay);
+      const lastDay = getLastDayOfCompletedQuarter()
+      setScheduleDate(lastDay);
     } else if (option === "first-day-next-quarter") {
-      const firstDay=getFirstDayOfNextQuarter()
-      setScheduleDate( firstDay);
+      const firstDay = getFirstDayOfNextQuarter()
+      setScheduleDate(firstDay);
     } else if (option === "custom") {
       setScheduleDate(customDate);
     }
@@ -205,7 +239,7 @@ const handleTimeChange=(option)=>{
   const getQuarterOptions = () => (
     <div>
       <select value={quarterOption} onChange={(e) => setQuar(e.target.value)}>
-      <option value="">--Select Option--</option>
+        <option value="">--Select Option--</option>
         <option value="last-day-completed-quarter">Last Day of Completed Quarter</option>
         <option value="first-day-next-quarter">First Day of Next Quarter</option>
         <option value="custom">Custom</option>
@@ -225,34 +259,26 @@ const handleTimeChange=(option)=>{
             {Object.keys(selectedReports).map((key) => selectedReports[key] && <li key={key}>{key} Report</li>)}
           </ul>
 
-           <ul> Selected Vehicles:
-              { selectedVehicles.length > 0 ?
-              (selectedVehicles.map(vehicle =>(
+          <ul> Selected Vehicles:
+            {selectedVehicle?.selected.length > 0 ?
+              (selectedVehicle.selected.map(vehicle => (
                 <li key={vehicle.vin}>
                   {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
                 </li>
               ))
-            ):(
-              <li>No Vehicles Found</li>
-            )}
-           </ul>
+              ) : (
+                <li>No Vehicles Found</li>
+              )}
+          </ul>
 
-           {/* <ul> Selected Vehicles:
-           {selectedVehicles.map(vehicle => (
-  vehicle?.vehicleData?.vin && (
-    <li key={vehicle.vehicleData.vin}>
-      {vehicle.vehicleData.vin} - {vehicle.vehicleData.registration_number} ({vehicle.vehicleData.branch})
-    </li>
-  )
-))}
-           </ul> */}
+         
 
           <ul>Entered Emails: {emailList.map((email) => <li key={email}>{email}</li>)}</ul>
 
           <div>
             <p>Select Time Interval</p>
-               <ul>
-                <li>
+            <ul>
+              <li>
                 {timeOfSchedule.map((option) => (
                   <li key={option.value} className='time-radio'>
                     <label>
@@ -260,16 +286,16 @@ const handleTimeChange=(option)=>{
                         type='radio'
                         value={option.value}
                         checked={time === option.value}
-                        onChange={() => {  handleTimeChange(option.value); }}
+                        onChange={() => { handleTimeChange(option.value); }}
                       />
-                      {option.key} 
+                      {option.key}
                     </label>
                   </li>
                 ))}
-                </li>
-              </ul>
+              </li>
+            </ul>
 
-            {(reportType === "monthly" ||   reportType ==="yearly" || reportType === "quarterly") && (
+            {(reportType === "monthly" || reportType === "yearly" || reportType === "quarterly") && (
               <div>
                 <input type="radio" value='skip-weekends' checked={skipWeekends === true} onChange={handleSkipWeekendsToggle} />
                 <label className='skip-weekends'>Skip Weekends: </label>
@@ -320,11 +346,10 @@ const handleTimeChange=(option)=>{
         <SummaryModal
           emailList={emailList}
           selectedReports={selectedReports}
-          selectedVehicles={selectedVehicles}
+          selectedVehicle={selectedVehicle}
           scheduleDate={scheduleDate}
           time={time}
-          // selectedDay={selectedDay}
-
+          selectedDay={selectedDay}
           skipWeekends={skipWeekends}
           onClose={() => setShowSummaryModal(false)}
         />

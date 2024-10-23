@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../redux/modalSlice';
 import ReportSelection from './ReportSelection';
@@ -13,6 +13,7 @@ const ScheduleReportModal = () => {
   const [emailList, setEmailList] = useState([]);
   const [selectedReports, setSelectedReports] = useState({});
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicles] = useState({});
 
   const handleNext = () => {
     if (emailList.length && Object.values(selectedReports).some(Boolean)) {
@@ -27,7 +28,10 @@ const ScheduleReportModal = () => {
       <div className="modal-content">
         <h3>Schedule Reports</h3>
 
-        <ReportSelection setSelectedReports={setSelectedReports} />
+        <ReportSelection 
+          setSelectedReports={setSelectedReports}
+          setVehicles={setSelectedVehicles}  
+        />
 
         <EmailInput emailList={emailList} setEmailList={setEmailList} />
 
@@ -37,12 +41,14 @@ const ScheduleReportModal = () => {
           <button className='next-button' disabled={!emailList.length || !Object.values(selectedReports).some(Boolean)} onClick={handleNext}>Next</button>
         </div>
        
-        {isNextModalOpen && 
-        <NextModal 
-        emailList={emailList} 
-        selectedReports={selectedReports}
-        onBack={() => setIsNextModalOpen(false)}
-        />}
+        { isNextModalOpen && 
+          <NextModal 
+            emailList={emailList} 
+            selectedReports={selectedReports}
+            onBack={() => setIsNextModalOpen(false)}
+            selectedVehicle={selectedVehicle}
+          />
+        }
       </div>
     </div>
   );

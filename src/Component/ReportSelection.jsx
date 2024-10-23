@@ -3,31 +3,30 @@ import './ReportSelection.css';
 import VehicleSearchDropdown from './VehicleSearchDropdown';
 import data from './VehicleData.json';
 
-const ReportSelection = ({ setSelectedReports ,onVehicleSelect  }) => {
-  const vehicleData =data.vehicles;
+const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => {
+  const vehicleData = data.vehicles;
   
   const [showVehicleSearch, setShowVehicleSearch] = useState(false);
-
   const [selectedVehicles, setSelectedVehicles] = useState([]);
   
   const handleCheckboxChange = (report) => {
-    setSelectedReports((prev) => ({ ...prev, [report]: !prev[report] }));
+    setSelectedReports((prev) => ({ 
+      ...prev, 
+      [report]: report 
+    }));
     
     if (report === 'Vehicle Wise') {
-     
       setShowVehicleSearch(!showVehicleSearch);
-       
-      
     }
   };
 
   const handleVehicleSelect = (selected) => {
-    setSelectedVehicles(selected);  
-    console.log('Selected vehicles:', selected);  
-     
+    setSelectedVehicles(selected);
+    setVehicles((prev) => ({
+      ...prev,
+      selected
+    }));
   };
-
-   
 
   return (
     <div className="report-type">
@@ -51,8 +50,6 @@ const ReportSelection = ({ setSelectedReports ,onVehicleSelect  }) => {
         selectedVehicles={selectedVehicles}
         />
       )}
-
-       
     </div>
   );
 };

@@ -1,31 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState ={
-     emailList :[],
-     selectedReports:{},
-     scheduleDate:null,
-     skipWeekends:false,
-}
+const initialState = [];
+
 const summarySlice = createSlice({
-    name: 'summary',
-    initialState,
-    reducers: {
-      summaryData: (state, action) => {
-        const { emailList,selectedReports,scheduleDate,skipWeekends} = action.payload;
-         state.emailList=emailList;
-         state.selectedReports=selectedReports;
-         state.scheduleDate=scheduleDate;
-         state.skipWeekends=skipWeekends;
-      },
-      resetSummaryData: (state) => {
-       state.emailList =[];
-       state.selectedReports={};
-       state.scheduleDate=null;
-       state.skipWeekends=false;
-      },
+  name: 'summary',
+  initialState,
+  reducers: {
+    summaryData: (state, action) => {
+      const { emailList, selectedReports, scheduleDate, skipWeekends, selectedVehicle } = action.payload;
+
+      state.push({
+        emailList,
+        selectedReports,
+        scheduleDate,
+        skipWeekends,
+        selectedVehicle,
+      });
     },
-  });
-  
-  export const { summaryData,resetSummaryData } = summarySlice.actions;
-  export default summarySlice.reducer;
-  
+    resetSummaryData: () => {
+      return initialState; 
+    },
+  },
+});
+
+export const { summaryData, resetSummaryData } = summarySlice.actions;
+export default summarySlice.reducer;
