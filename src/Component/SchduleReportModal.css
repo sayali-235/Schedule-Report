@@ -8,6 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+ 
 }
 
 .modal-content {
@@ -17,7 +19,7 @@
   width: 700px;
   height: 700px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
+ 
 }
 
  
@@ -31,11 +33,15 @@
 .next-button {
   width: 20%;
   margin-left: 50px;
-  margin-top: 200px;
+  margin-top:  40%;
 }
  
 .next-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.modal-footer{
+  display: flex;
 }
 

@@ -12,7 +12,7 @@
     z-index: 2000;
   }
   
-  /* Summary Modal Content */
+ 
   .nested-modal-content {
     background: white;
     border-radius: 8px;
@@ -37,14 +37,14 @@
     margin-bottom: 10px;
   }
   
-  /* Summary Modal Actions */
+  
   .modal-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
   }
   
-  /* Back and Confirm Buttons */
+  
  .back-button {
      
     border: none;

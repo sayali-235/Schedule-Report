@@ -5,7 +5,7 @@ import './SummaryModal.css';
 
 
 const SummaryModal = (props) => {
-  const { emailList, selectedReports, scheduleDate, skipWeekends, onClose } = props
+  const { emailList, selectedReports, scheduleDate, skipWeekends, onClose ,selectedDay} = props
   
   const handleBackClick = () => {
     onClose();
@@ -26,6 +26,9 @@ const SummaryModal = (props) => {
           <li><strong>Reports:</strong> {Object.keys(selectedReports).filter(key => selectedReports[key]).join(', ')}</li>
 
           <li><strong>Schedule Date:</strong> {moment(scheduleDate).format('MMMM Do YYYY')}</li>
+
+          {/* <li><strong>Schedule Day:</strong> {selectedDay}</li> */}
+
           <li><strong>Skip Weekends:</strong> {skipWeekends ? 'Yes' : 'No'}</li>
 
         </ul>

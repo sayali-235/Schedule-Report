@@ -1,4 +1,4 @@
-/* General reset and styling */
+ 
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -10,7 +10,7 @@ body {
     height: 100vh;
   }
   
-  /* Login container styling */
+ 
   .login-container {
     background-color: #fff;
     padding: 20px;
@@ -20,20 +20,20 @@ body {
     width: 100%;
   }
   
-  /* Title styling */
+  
   .login-title {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
   }
   
-  /* Form styling */
+  
   .login-form {
     display: flex;
     flex-direction: column;
   }
   
-  /* Input group styling */
+ 
   .login-input-group {
     margin-bottom: 20px;
   }
@@ -45,7 +45,7 @@ body {
     color: #333;
   }
   
-  /* Input styling */
+  
   .login-input {
     padding: 10px;
     border: 1px solid #ddd;
@@ -60,7 +60,7 @@ body {
     outline: none;
   }
   
-  /* Button styling */
+ 
   .login-button {
     padding: 10px;
     background-color: #4caf50;
@@ -75,7 +75,7 @@ body {
     background-color: #45a049;
   }
   
-  /* Responsive styling */
+ 
   @media (max-width: 500px) {
     .login-container {
       padding: 15px;
