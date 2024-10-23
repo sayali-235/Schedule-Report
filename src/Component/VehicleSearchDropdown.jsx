@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './VehicleSearchDropdown.css';
 
-const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect }) => {
+const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect}) => {
 
   
   const [selectedBranch, setSelectedBranch] = useState('');
@@ -21,11 +21,12 @@ const VehicleSearchDropdown = ({ vehicles=[], onVehicleSelect }) => {
   const handleVehicleSelection = (vehicle) => {
     const isSelected = selectedVehicles.some((v) => v.vin === vehicle.vin );
     const updatedVehicles = isSelected
-      ? selectedVehicles.filter((v) => v.vin !== vehicle.vin && v.registration_number==vehicle.registration_number)  
-      : [...selectedVehicles, vehicle];  
- 
+      ? selectedVehicles.filter((v) => v.vin !== vehicle.vin)  
+      : [...selectedVehicles,  vehicle];  
+ console.log("updated selected vehicles:",updatedVehicles)
     setSelectedVehicles(updatedVehicles);
       //  console.log("selected vehiles: ",selectedVehicles)
+      onVehicleSelect(updatedVehicles);
   };
 
    

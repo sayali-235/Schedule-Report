@@ -5,14 +5,15 @@ import data from './VehicleData.json';
 
 const ReportSelection = ({ setSelectedReports ,onVehicleSelect  }) => {
   const vehicleData =data.vehicles;
+  
   const [showVehicleSearch, setShowVehicleSearch] = useState(false);
 
   const [selectedVehicles, setSelectedVehicles] = useState([]);
   
-  const handleCheckboxChange = (e) => {
-    setSelectedReports((prev) => ({ ...prev, [e]: !prev[e] }));
+  const handleCheckboxChange = (report) => {
+    setSelectedReports((prev) => ({ ...prev, [report]: !prev[report] }));
     
-    if (e === 'Vehicle Wise') {
+    if (report === 'Vehicle Wise') {
      
       setShowVehicleSearch(!showVehicleSearch);
        
@@ -23,6 +24,7 @@ const ReportSelection = ({ setSelectedReports ,onVehicleSelect  }) => {
   const handleVehicleSelect = (selected) => {
     setSelectedVehicles(selected);  
     console.log('Selected vehicles:', selected);  
+     
   };
 
    
@@ -31,7 +33,7 @@ const ReportSelection = ({ setSelectedReports ,onVehicleSelect  }) => {
     <div className="report-type">
       <label className="label-title">Select Required Report Types:</label>
       {['Fleet Wise', 'Vehicle Wise', 'Trip Wise', 'Driving Scorecard'].map((report ) => (
-        <div key={ report.vehicleData}>
+        <div key={ report}>
           <input
             type="checkbox"
             className="checkbox"

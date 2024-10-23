@@ -4,11 +4,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import SummaryModal from './SummaryModal';
 import './NextModal.css';
+ 
 
 const NextModal = (props) => {
-  const { emailList, selectedReports, onBack,  onVehicleSelect=[] ,selectedVehicles=[], } = props;
+  const { emailList=[], selectedReports={}, onBack,  selectedVehicles=[] } = props;
   const [scheduleDate, setScheduleDate] = useState(null);
-  const [reportType, setReportType] = useState();
+  const [reportType, setReportType] = useState(); 
   const [selectedDay, setSelectedDay] = useState("");
   const [skipWeekends, setSkipWeekends] = useState(false);
   const [quarterOption, setQuarterOption] = useState("");
@@ -27,6 +28,7 @@ const [time, setTime]=useState(false)
       getFirstDayOfNextQuarter();
     }
   }, [reportType]);
+
 const handleTimeChange=(option)=>{
   setTime(option)
 }
@@ -226,8 +228,8 @@ const handleTimeChange=(option)=>{
            <ul> Selected Vehicles:
               { selectedVehicles.length > 0 ?
               (selectedVehicles.map(vehicle =>(
-                <li key={vehicle.vehicleData.vin}>
-                  {vehicle.vehicleData.vin}-{vehicle.vehicleData.registration_number} ({vehicle.vehicleData.branch})
+                <li key={vehicle.vin}>
+                  {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
                 </li>
               ))
             ):(
@@ -236,12 +238,13 @@ const handleTimeChange=(option)=>{
            </ul>
 
            {/* <ul> Selected Vehicles:
-              {selectedVehicles.map(vehicle =>(
-                <li key={vehicle.vin}>
-                  {vehicle.vin}-{vehicle.registration_number} ({vehicle.branch})
-                </li>
-              ))
-            }
+           {selectedVehicles.map(vehicle => (
+  vehicle?.vehicleData?.vin && (
+    <li key={vehicle.vehicleData.vin}>
+      {vehicle.vehicleData.vin} - {vehicle.vehicleData.registration_number} ({vehicle.vehicleData.branch})
+    </li>
+  )
+))}
            </ul> */}
 
           <ul>Entered Emails: {emailList.map((email) => <li key={email}>{email}</li>)}</ul>
@@ -317,8 +320,9 @@ const handleTimeChange=(option)=>{
         <SummaryModal
           emailList={emailList}
           selectedReports={selectedReports}
+          selectedVehicles={selectedVehicles}
           scheduleDate={scheduleDate}
-
+          time={time}
           // selectedDay={selectedDay}
 
           skipWeekends={skipWeekends}
