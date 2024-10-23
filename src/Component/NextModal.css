@@ -97,3 +97,17 @@
     font-size: 15px;
     flex: 1;
   }
+  
+  .morning {
+     
+  
+    margin-left: 20px ;
+    
+    
+  }
+ .evening{
+  justify-content: space-between;
+  margin-left: 20px ;
+ }
+
+ 

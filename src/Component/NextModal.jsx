@@ -6,7 +6,7 @@ import SummaryModal from './SummaryModal';
 import './NextModal.css';
 
 const NextModal = (props) => {
-  const { emailList=[], selectedReports={}, onBack,  onVehicleSelect=[] } = props;
+  const { emailList, selectedReports, onBack,  onVehicleSelect=[] ,selectedVehicles=[], } = props;
   const [scheduleDate, setScheduleDate] = useState(null);
   const [reportType, setReportType] = useState();
   const [selectedDay, setSelectedDay] = useState("");
@@ -14,8 +14,8 @@ const NextModal = (props) => {
   const [quarterOption, setQuarterOption] = useState("");
   const [yearOption, setYearOption] = useState("");
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-
 const [customDate, setCustomDate] =useState(null)
+const [time, setTime]=useState(false)
 
   useEffect(() => {
      
@@ -27,7 +27,9 @@ const [customDate, setCustomDate] =useState(null)
       getFirstDayOfNextQuarter();
     }
   }, [reportType]);
-
+const handleTimeChange=(option)=>{
+  setTime(option)
+}
   const handleReportTypeChange = (option) => {
     setScheduleDate(null);
     setReportType(option);
@@ -65,6 +67,11 @@ const [customDate, setCustomDate] =useState(null)
     { key: 'Thursday', value: 'thursday' },
     { key: 'Friday', value: 'friday' }
   ];
+  
+  const timeOfSchedule =[
+    {key :'9am', value:'9am'},
+    {key :'5pm', value:'5pm'}
+  ]
 
   const renderDayOptions = () => (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -217,10 +224,10 @@ const [customDate, setCustomDate] =useState(null)
           </ul>
 
            <ul> Selected Vehicles:
-              {onVehicleSelect.length > 0 ?
-              (onVehicleSelect.map(vehicle =>(
-                <li key={vehicle.vin}>
-                  {vehicle.vin}-{vehicle.registration_number} ({vehicle.branch})
+              { selectedVehicles.length > 0 ?
+              (selectedVehicles.map(vehicle =>(
+                <li key={vehicle.vehicleData.vin}>
+                  {vehicle.vehicleData.vin}-{vehicle.vehicleData.registration_number} ({vehicle.vehicleData.branch})
                 </li>
               ))
             ):(
@@ -241,6 +248,24 @@ const [customDate, setCustomDate] =useState(null)
 
           <div>
             <p>Select Time Interval</p>
+               <ul>
+                <li>
+                {timeOfSchedule.map((option) => (
+                  <li key={option.value} className='time-radio'>
+                    <label>
+                      <input
+                        type='radio'
+                        value={option.value}
+                        checked={time === option.value}
+                        onChange={() => {  handleTimeChange(option.value); }}
+                      />
+                      {option.key} 
+                    </label>
+                  </li>
+                ))}
+                </li>
+              </ul>
+
             {(reportType === "monthly" ||   reportType ==="yearly" || reportType === "quarterly") && (
               <div>
                 <input type="radio" value='skip-weekends' checked={skipWeekends === true} onChange={handleSkipWeekendsToggle} />
@@ -293,7 +318,9 @@ const [customDate, setCustomDate] =useState(null)
           emailList={emailList}
           selectedReports={selectedReports}
           scheduleDate={scheduleDate}
-          selectedDay={selectedDay}
+
+          // selectedDay={selectedDay}
+
           skipWeekends={skipWeekends}
           onClose={() => setShowSummaryModal(false)}
         />

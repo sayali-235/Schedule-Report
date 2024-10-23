@@ -9,7 +9,6 @@
     border-radius: 5px;  
     background-color: #f9f9f9; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
- 
     max-height: 30vh;  
 }
 
@@ -21,7 +20,10 @@
 
 .vehicle-search-dropdown select,
 .vehicle-search-dropdown input {
-    width: 100%;  
+    display: flex;
+    height: auto;
+    align-items: center;
+    width: 60%;  
     padding: 5px;  
     border: 1px solid #ddd;  
     border-radius: 3px;  
