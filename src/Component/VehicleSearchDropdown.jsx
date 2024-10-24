@@ -42,7 +42,8 @@ const VehicleSearchDropdown = ({ vehicles = [], onVehicleSelect }) => {
       <select id="branchDropdown" value={selectedBranch} onChange={handleBranchChange}>
         <option value="">All</option>
         {branches.map((branch, index) => (
-          <option key={index} value={branch}>
+          <option key={index} 
+          value={branch}>
             {branch}
           </option>
         ))}

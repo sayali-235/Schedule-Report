@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../redux/modalSlice';
 import ReportSelection from './ReportSelection';
@@ -10,7 +10,7 @@ const ScheduleReportModal = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
 
-  const [emailList, setEmailList] = useState([]);
+  const [emailList, setEmailList]= useState([]);
   const [selectedReports, setSelectedReports] = useState({});
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicles] = useState({});
@@ -20,7 +20,6 @@ const ScheduleReportModal = () => {
       setIsNextModalOpen(true);
     }
   };
-
   if (!isModalOpen) return null;
 
   return (
@@ -34,10 +33,8 @@ const ScheduleReportModal = () => {
         />
 
         <EmailInput emailList={emailList} setEmailList={setEmailList} />
-
         <div className="modal-footer">
           <button className='cancel-button' onClick={() => dispatch(closeModal())}>Cancel</button>
-
           <button className='next-button' disabled={!emailList.length || !Object.values(selectedReports).some(Boolean)} onClick={handleNext}>Next</button>
         </div>
        
@@ -45,8 +42,8 @@ const ScheduleReportModal = () => {
           <NextModal 
             emailList={emailList} 
             selectedReports={selectedReports}
-            onBack={() => setIsNextModalOpen(false)}
             selectedVehicle={selectedVehicle}
+            onBack={() => setIsNextModalOpen(false)}
           />
         }
       </div>

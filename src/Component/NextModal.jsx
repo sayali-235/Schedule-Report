@@ -7,7 +7,9 @@ import './NextModal.css';
 
 
 const NextModal = (props) => {
+
   const { emailList, selectedReports, onBack, selectedVehicle} = props;
+
   const [scheduleDate, setScheduleDate] = useState(null);
   const [reportType, setReportType] = useState();
   const [selectedDay, setSelectedDay] = useState("");
@@ -18,9 +20,7 @@ const NextModal = (props) => {
   const [customDate, setCustomDate] = useState(null)
   const [time, setTime] = useState(false)
 
-  useEffect(() => {
-    console.log(props);
-  }, [props]);
+  console.log("props: ",props)
 
   useEffect(() => {
     if (reportType === 'yearly') {
@@ -80,15 +80,15 @@ const NextModal = (props) => {
 
   function getNextDayOfWeek(selectedDay) {
     const daysOfWeek = {
-      "sunday": 0,
+      
       "monday": 1,
       "tuesday": 2,
       "wednesday": 3,
       "thursday": 4,
       "friday": 5,
-      "saturday": 6
+ 
     };
-  
+    
     const today = new Date();
     const todayDayOfWeek = today.getDay();
 
@@ -145,7 +145,7 @@ const NextModal = (props) => {
           showFullMonthYearPicker={true}
           minDate={today}
           maxDate={new Date(today.getFullYear(), 11, 31)}
-          inline
+          inline 
         />
       </div>
     );
@@ -196,19 +196,24 @@ const NextModal = (props) => {
         <option value="first-day-next-year">First Day of Next Year</option>
         <option value="custom">Custom</option>
       </select>
-      {yearOption === 'custom' && renderCalendarForMonth()}
+      {yearOption === 'custom' && 
+      renderCalendarForMonth()
+      }
     </div>
   );
 
   //Quarterly
   const setQuar = (option) => {
-    if (option === "last-day-completed-quarter") {
+    if (option === "last-day-completed-quarter") 
+      {
       const lastDay = getLastDayOfCompletedQuarter()
       setScheduleDate(lastDay);
-    } else if (option === "first-day-next-quarter") {
+    } else if (option === "first-day-next-quarter") 
+      {
       const firstDay = getFirstDayOfNextQuarter()
       setScheduleDate(firstDay);
-    } else if (option === "custom") {
+    } else if (option === "custom") 
+    {
       setScheduleDate(customDate);
     }
     setQuarterOption(option);
@@ -256,9 +261,12 @@ const NextModal = (props) => {
           <h3>Selected Reports and Emails</h3>
 
           <ul>Selected Reports:
-            {Object.keys(selectedReports).map((key) => selectedReports[key] && <li key={key}>{key} Report</li>)}
+            {Object.keys(selectedReports).map((key) => selectedReports[key] &&
+             <li key={key}>
+              {key} Report</li>)}
           </ul>
-
+          
+          { selectedReports["Vehicle Wise"] && 
           <ul> Selected Vehicles:
             {selectedVehicle?.selected.length > 0 ?
               (selectedVehicle.selected.map(vehicle => (
@@ -270,15 +278,19 @@ const NextModal = (props) => {
                 <li>No Vehicles Found</li>
               )}
           </ul>
-
+}
          
 
-          <ul>Entered Emails: {emailList.map((email) => <li key={email}>{email}</li>)}</ul>
+          <ul>Entered Emails: {emailList.map((email) => 
+            <li key={email}>
+              {email}
+              </li>)}
+              </ul>
 
           <div>
             <p>Select Time Interval</p>
             <ul>
-              <li>
+              <li style={{ display: 'flex'}}>
                 {timeOfSchedule.map((option) => (
                   <li key={option.value} className='time-radio'>
                     <label>
@@ -295,9 +307,12 @@ const NextModal = (props) => {
               </li>
             </ul>
 
-            {(reportType === "monthly" || reportType === "yearly" || reportType === "quarterly") && (
+            {(reportType === "monthly" || reportType === "yearly" || reportType === "quarterly") && 
+            (
               <div>
-                <input type="radio" value='skip-weekends' checked={skipWeekends === true} onChange={handleSkipWeekendsToggle} />
+                <input type="radio" value='skip-weekends' 
+                checked={skipWeekends === true} 
+                onChange={handleSkipWeekendsToggle} />
                 <label className='skip-weekends'>Skip Weekends: </label>
               </div>
             )}
@@ -311,7 +326,7 @@ const NextModal = (props) => {
                         type='radio'
                         value={option.value}
                         checked={reportType === option.value}
-                        onChange={() => { handleReportTypeChange(option.value); }}
+                        onChange={() => { handleReportTypeChange(option.value) }}
                       />
                       {option.label}
                     </label>
@@ -349,7 +364,6 @@ const NextModal = (props) => {
           selectedVehicle={selectedVehicle}
           scheduleDate={scheduleDate}
           time={time}
-          selectedDay={selectedDay}
           skipWeekends={skipWeekends}
           onClose={() => setShowSummaryModal(false)}
         />

@@ -23,6 +23,9 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.currentUser = user;
       }
+      else{
+        alert("Invalid Email and Passwword")
+      }
     },
     logout: (state) => {
       state.isAuthenticated = false;

@@ -17,11 +17,9 @@ const summarySlice = createSlice({
         selectedVehicle,
       });
     },
-    resetSummaryData: () => {
-      return initialState; 
-    },
+     
   },
 });
 
-export const { summaryData, resetSummaryData } = summarySlice.actions;
+export const { summaryData  } = summarySlice.actions;
 export default summarySlice.reducer;

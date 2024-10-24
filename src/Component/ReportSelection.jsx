@@ -13,6 +13,7 @@ const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => 
     setSelectedReports((prev) => ({ 
       ...prev, 
       [report]: report 
+ 
     }));
     
     if (report === 'Vehicle Wise') {
@@ -31,8 +32,8 @@ const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => 
   return (
     <div className="report-type">
       <label className="label-title">Select Required Report Types:</label>
-      {['Fleet Wise', 'Vehicle Wise', 'Trip Wise', 'Driving Scorecard'].map((report ) => (
-        <div key={ report}>
+      {['Fleet Wise', 'Vehicle Wise', 'Trip Wise', 'Driving Scorecard'].map((report) => (
+        <div key={report}>
           <input
             type="checkbox"
             className="checkbox"
