@@ -1,81 +1,83 @@
 /* Input styles */
 .add-button {
-    width: 15%;
-    margin-left:  30%;
-   
- 
-  }
-  .emailId {
-     font-size: 18px;
-     font-weight: bold;
-      padding : 5px;
-       
-  }
+  width: 15%;
+  margin-left:  30%;
+  margin-top: 0px;
+  padding: 10px;
+}
+.emailId {
+   font-size: 18px;
+   font-weight: bold;
+    padding : 5px;
+    
+     
+}
 
 .email-id {
-    padding: 10px;
-    border: 1px solid #1a1616;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 60%;
-    height: 20%;
-    box-sizing: border-box; 
-  }
- .email-input-container{
-  display: flex;
-  margin-top: 10px;
-  
- }
-   
-  .email-list-box {
-    border: 1px solid #9c2828;
-    border-radius: 4px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    background-color: #f8f6f6;
-    box-sizing: border-box;
-    padding: 20px;
-    margin-top: 20px;
-    
-  }
-  
-  .email-chip {
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #ecd7d7;
-    color: #333;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-     
-  }
-  
-  .email-chip button {
-    background-color: transparent;
-    border: none;
-    color: #cc0000;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1px;
-    height: 1px;
-    margin-top: 5px;
-    border-radius: 100%;
-     
-  }
-  
-  .email-chip button:hover {
-    color: #7e1111;
-  }
+  padding: 10px;
+  border: 1px solid #1a1616;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 70%;
+  height: 20%;
+  box-sizing: border-box; 
+}
+.email-input-container{
+display: flex;
+margin-top: 10px;
 
-  .remove-email {
-    font-size: 10px;
-    justify-content: center;
-  }
+
+}
+ 
+.email-list-box {
+  border: 1px solid #9c2828;
+  border-radius: 4px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: #f8f6f6;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-top: 10px;
+  height: auto;
   
-  
+}
+
+.email-chip {
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #ecd7d7;
+  color: #333;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+   
+}
+
+.email-chip button {
+  background-color: transparent;
+  border: none;
+  color: #cc0000;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1px;
+  height: 1px;
+  margin-top: 5px;
+  border-radius: 100%;
+   
+}
+
+.email-chip button:hover {
+  color: #7e1111;
+}
+
+.remove-email {
+  font-size: 10px;
+  justify-content: center;
+}
+

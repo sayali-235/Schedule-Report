@@ -19,8 +19,10 @@
   height: 700px;
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
   .modal-content h3 {
+    
     margin-top: 0;
     margin-bottom: 20px;
      
@@ -109,5 +111,27 @@
   justify-content: space-between;
   margin-left: 20px ;
  }
+
+ .selected-report {
+    font-size: 18px;
+    
+ }
+ .selected-vehicles {
+  font-size: 18px;
+}
+.entered-emails {
+  font-size: 18px;
+}
+.sel-report-li {
+  font-size: 15px;
+}
+.sel-vehicle-li {
+  font-size: 15px;
+}
+.en-li {
+  font-size: 15px;
+}
+
+
 
  

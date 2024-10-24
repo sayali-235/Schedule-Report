@@ -66,11 +66,13 @@ const NextModal = (props) => {
   ];
 
   const daysOfWeek = [
+    {key : 'Sunday', value: 'sunday'},
     { key: 'Monday', value: 'monday' },
     { key: 'Tuesday', value: 'tuesday' },
     { key: 'Wednesday', value: 'wednesday' },
     { key: 'Thursday', value: 'thursday' },
-    { key: 'Friday', value: 'friday' }
+    { key: 'Friday', value: 'friday' },
+    { key: 'Saturday', value: 'saturday'}
   ];
 
   const timeOfSchedule = [
@@ -80,12 +82,13 @@ const NextModal = (props) => {
 
   function getNextDayOfWeek(selectedDay) {
     const daysOfWeek = {
-      
+      "sunday": 0,
       "monday": 1,
       "tuesday": 2,
       "wednesday": 3,
       "thursday": 4,
       "friday": 5,
+      "saturday":6
  
     };
     
@@ -106,26 +109,33 @@ const NextModal = (props) => {
     return nextDate.toLocaleDateString('en-US', options);
   }
   
-  const renderDayOptions = () => (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      {daysOfWeek.map((day) => (
-        <div key={day.key}>
-          <label>{day.key}</label>
-          <input
-            type="radio"
-            value={day.value}
-            name="day"
-            checked={selectedDay === day.value}
-            onChange={() => {
-              setSelectedDay(day.value)
-              setScheduleDate(getNextDayOfWeek(day.value));
-            }}
-          />
-        </div>
-      ))}
-    </div>
-  );
-
+  const renderDayOptions = () => {
+    const filteredDaysOfWeek = daysOfWeek.filter((day) =>
+      skipWeekends ? day.key !== 'Saturday' && day.key !== 'Sunday' : true
+    );
+  
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {filteredDaysOfWeek.map((day) => (
+          <div key={day.key}>
+            <label>{day.key}</label>
+            <input
+              type="radio"
+              value={day.value}
+              name="day"
+              checked={selectedDay === day.value}
+              onChange={() => {
+                setSelectedDay(day.value);
+                setScheduleDate(getNextDayOfWeek(day.value));
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
+  
+  
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -260,17 +270,17 @@ const NextModal = (props) => {
         <div className="modal-content">
           <h3>Selected Reports and Emails</h3>
 
-          <ul>Selected Reports:
+          <ul className='selected-report'>Selected Reports:
             {Object.keys(selectedReports).map((key) => selectedReports[key] &&
-             <li key={key}>
+             <li key={key} className='sel-report-li'>
               {key} Report</li>)}
           </ul>
           
           { selectedReports["Vehicle Wise"] && 
-          <ul> Selected Vehicles:
+          <ul className='selected-vehicles'> Selected Vehicles:
             {selectedVehicle?.selected.length > 0 ?
               (selectedVehicle.selected.map(vehicle => (
-                <li key={vehicle.vin}>
+                <li key={vehicle.vin} className='sel-vehicle-li'>
                   {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
                 </li>
               ))
@@ -281,8 +291,8 @@ const NextModal = (props) => {
 }
          
 
-          <ul>Entered Emails: {emailList.map((email) => 
-            <li key={email}>
+          <ul className='entered-emails'>Entered Emails: {emailList.map((email) => 
+            <li key={email} className='en-li'>
               {email}
               </li>)}
               </ul>
@@ -307,7 +317,7 @@ const NextModal = (props) => {
               </li>
             </ul>
 
-            {(reportType === "monthly" || reportType === "yearly" || reportType === "quarterly") && 
+            {reportType  && 
             (
               <div>
                 <input type="radio" value='skip-weekends' 

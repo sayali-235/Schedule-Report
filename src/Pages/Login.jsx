@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../Component/InputField';
-import './Login.css';   
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const currentUser = useSelector((state) => state.auth.currentUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +19,15 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
+    if (isAuthenticated && currentUser) {
+      const storedData = localStorage.getItem(currentUser.email);
+      if (storedData) {
+        navigate('/edit-schedule'); // Redirect to the edit schedule page if schedule exists
+      } else {
+        navigate('/home'); // Otherwise, go to the home page or dashboard
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, currentUser]);
 
   return (
     <div className="login-container">
@@ -36,5 +42,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

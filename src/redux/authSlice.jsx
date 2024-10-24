@@ -18,13 +18,12 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const { email, password } = action.payload;
-      const user = state.users.find((u) => u.email ===  email && u.password === password);
+      const user = state.users.find((u) => u.email === email && u.password === password);
       if (user) {
         state.isAuthenticated = true;
-        state.currentUser = user;
-      }
-      else{
-        alert("Invalid Email and Passwword")
+        state.currentUser = user;  // Ensure this is correctly set
+      } else {
+        alert('Invalid Email or Password');
       }
     },
     logout: (state) => {
@@ -33,6 +32,7 @@ const authSlice = createSlice({
     },
   },
 });
+
 
 export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;
