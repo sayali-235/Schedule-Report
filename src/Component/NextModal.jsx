@@ -213,7 +213,7 @@ const NextModal = (props) => {
     </div>
   );
 
-  //Quarterly
+  
   const setQuar = (option) => {
     if (option === "last-day-completed-quarter") 
       {

@@ -57,7 +57,9 @@ const SummaryModal = (props) => {
           <li><strong>Reports:</strong> {Object.keys(selectedReports).filter(key => selectedReports[key]).join(', ')}</li>
           <li>
             <strong>Selected Vehicles:</strong>
-            {selectedVehicle && selectedVehicle.selected && selectedVehicle.selected.length > 0
+            {selectedVehicle && 
+            selectedVehicle.selected && 
+            selectedVehicle.selected.length > 0
               ? selectedVehicle.selected.map(vehicle => (
                   <div key={vehicle.vin}>
                     {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
