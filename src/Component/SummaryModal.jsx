@@ -2,15 +2,15 @@ import React from 'react';
 import moment from 'moment';
 import './SummaryModal.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom';  
 import { summaryData } from '../redux/summarySlice';
-import { logout } from '../redux/authSlice'; // Import logout action
+import { logout } from '../redux/authSlice';  
 
 const SummaryModal = (props) => {
-  const { emailList, selectedReports, scheduleDate, skipWeekends, onClose, selectedVehicle, time } = props;
+  const { emailList, selectedReports, scheduleDate,   skipWeekends, onClose, selectedVehicle, time } = props;
   const dispatch = useDispatch();
   
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();  
   const currentUser = useSelector((state) => state.auth.currentUser);
 
   const handleBackClick = () => {
@@ -38,15 +38,14 @@ const SummaryModal = (props) => {
     storedSummaries.push(summary);
     localStorage.setItem(currentUser.email, JSON.stringify(storedSummaries));
 
-    // Show the alert and after the user clicks OK, log them out
+    
     alert('Schedule confirmed! You will now be logged out.');
-
-    // After alert is dismissed, logout, close the modal, and navigate to the login page
-    dispatch(logout());
+    dispatch(logout(!currentUser));
+    navigate('/');
+    window.location.reload() 
     onClose();
 
-    // Navigate to login page
-    navigate('/login'); // Adjust the route to your login page path
+     
   };
 
   return (
@@ -66,7 +65,7 @@ const SummaryModal = (props) => {
                 ))
               : 'None'}
           </li>
-          <li><strong>Schedule Date:</strong> {moment(scheduleDate).format(' Do MMMM YYYY')}</li>
+          <li><strong>Schedule On:</strong> {moment(scheduleDate).format(' Do MMMM YYYY')}</li>
           <li><strong>Schedule Time:</strong> {time}</li>
           <li><strong>Skip Weekends:</strong> {skipWeekends ? 'Yes' : 'No'}</li>
         </ul>

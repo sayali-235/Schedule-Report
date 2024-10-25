@@ -21,7 +21,7 @@ const authSlice = createSlice({
       const user = state.users.find((u) => u.email === email && u.password === password);
       if (user) {
         state.isAuthenticated = true;
-        state.currentUser = user;  // Ensure this is correctly set
+        state.currentUser = user;   
       } else {
         alert('Invalid Email or Password');
       }

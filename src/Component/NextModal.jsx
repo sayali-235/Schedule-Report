@@ -38,6 +38,7 @@ const NextModal = (props) => {
   const handleReportTypeChange = (option) => {
     setScheduleDate(null);
     setReportType(option);
+    setSkipWeekends(false);
   };
 
   const handleSkipWeekendsToggle = () => {

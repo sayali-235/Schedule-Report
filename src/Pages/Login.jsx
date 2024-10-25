@@ -22,9 +22,9 @@ const Login = () => {
     if (isAuthenticated && currentUser) {
       const storedData = localStorage.getItem(currentUser.email);
       if (storedData) {
-        navigate('/edit-schedule'); // Redirect to the edit schedule page if schedule exists
+        navigate('/edit-schedule');  
       } else {
-        navigate('/home'); // Otherwise, go to the home page or dashboard
+        navigate('/home'); 
       }
     }
   }, [isAuthenticated, navigate, currentUser]);
