@@ -30,10 +30,10 @@ const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => 
   };
 
   return (
-    <div className="report-type">
-      <label className="label-title">Select Required Report Types:</label>
+    <div className="report-container">
+      <label className="report-label">Select Required Report Types:</label>
       {['Fleet Wise', 'Vehicle Wise', 'Trip Wise', 'Driving Scorecard'].map((report) => (
-        <div key={report}>
+        <div key={report} className="radio-list">
           <input
             type="checkbox"
             className="checkbox"

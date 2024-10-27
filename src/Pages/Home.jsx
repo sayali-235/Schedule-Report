@@ -7,7 +7,7 @@ const Home = () => {
   const dispatch = useDispatch();
   
   return (
-    <div>
+    <div className="home-container">
       <h2>Welcome, To Fleet Edge !</h2>
       <button onClick={() => dispatch(openModal())}>Schedule Your Report</button>
     </div>

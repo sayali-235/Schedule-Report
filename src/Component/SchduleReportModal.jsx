@@ -5,6 +5,7 @@ import ReportSelection from './ReportSelection';
 import EmailInput from './EmailInput';
 import NextModal from './NextModal';
 import './SchduleReportModal.css';
+ 
 
 const ScheduleReportModal = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const ScheduleReportModal = () => {
   const handleNext = () => {
     if (emailList.length && Object.values(selectedReports).some(Boolean)) {
       setIsNextModalOpen(true);
+      
     }
   };
   if (!isModalOpen) return null;

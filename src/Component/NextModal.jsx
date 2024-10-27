@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
-import SummaryModal from './SummaryModal';
-import './NextModal.css';
-
+import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+import SummaryModal from "./SummaryModal";
+import "./NextModal.css";
 
 const NextModal = (props) => {
-
-  const { emailList, selectedReports, onBack, selectedVehicle} = props;
+  const { emailList, selectedReports, onBack, selectedVehicle } = props;
 
   const [scheduleDate, setScheduleDate] = useState(null);
   const [reportType, setReportType] = useState();
@@ -17,24 +15,24 @@ const NextModal = (props) => {
   const [quarterOption, setQuarterOption] = useState("");
   const [yearOption, setYearOption] = useState("");
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-  const [customDate, setCustomDate] = useState(null)
-  const [time, setTime] = useState(false)
+  const [customDate, setCustomDate] = useState(null);
+  const [time, setTime] = useState(false);
 
-  console.log("props: ",props)
+  console.log("props: ", props);
 
   useEffect(() => {
-    if (reportType === 'yearly') {
+    if (reportType === "yearly") {
       getLastDayOfCurrentYear();
       getFirstDayOfCurrentYear();
-    } else if (reportType === 'quarterly') {
+    } else if (reportType === "quarterly") {
       getLastDayOfCompletedQuarter();
       getFirstDayOfNextQuarter();
     }
   }, [reportType]);
-  
+
   const handleTimeChange = (option) => {
-    setTime(option)
-  }
+    setTime(option);
+  };
   const handleReportTypeChange = (option) => {
     setScheduleDate(null);
     setReportType(option);
@@ -43,7 +41,7 @@ const NextModal = (props) => {
 
   const handleSkipWeekendsToggle = () => {
     setSkipWeekends(!skipWeekends);
-  }
+  };
 
   const handleBackClick = () => {
     onBack();
@@ -59,64 +57,63 @@ const NextModal = (props) => {
   };
 
   const reportOptions = [
-    { label: 'Weekly', value: 'weekly' },
-    { label: 'Bi-Weekly', value: 'biWeekly' },
-    { label: 'Monthly', value: 'monthly' },
-    { label: 'Quarterly', value: 'quarterly' },
-    { label: 'Yearly', value: 'yearly' }
+    { label: "Weekly", value: "weekly" },
+    { label: "Bi-Weekly", value: "biWeekly" },
+    { label: "Monthly", value: "monthly" },
+    { label: "Quarterly", value: "quarterly" },
+    { label: "Yearly", value: "yearly" },
   ];
 
   const daysOfWeek = [
-    {key : 'Sunday', value: 'sunday'},
-    { key: 'Monday', value: 'monday' },
-    { key: 'Tuesday', value: 'tuesday' },
-    { key: 'Wednesday', value: 'wednesday' },
-    { key: 'Thursday', value: 'thursday' },
-    { key: 'Friday', value: 'friday' },
-    { key: 'Saturday', value: 'saturday'}
+    { key: "Sunday", value: "sunday" },
+    { key: "Monday", value: "monday" },
+    { key: "Tuesday", value: "tuesday" },
+    { key: "Wednesday", value: "wednesday" },
+    { key: "Thursday", value: "thursday" },
+    { key: "Friday", value: "friday" },
+    { key: "Saturday", value: "saturday" },
   ];
 
   const timeOfSchedule = [
-    { key: '9am', value: '9am' },
-    { key: '5pm', value: '5pm' }
-  ]
+    { key: "9am", value: "9am" },
+    { key: "5pm", value: "5pm" },
+  ];
 
   function getNextDayOfWeek(selectedDay) {
     const daysOfWeek = {
-      "sunday": 0,
-      "monday": 1,
-      "tuesday": 2,
-      "wednesday": 3,
-      "thursday": 4,
-      "friday": 5,
-      "saturday":6
- 
+      sunday: 0,
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6,
     };
-    
+
     const today = new Date();
     const todayDayOfWeek = today.getDay();
 
     const targetDay = daysOfWeek[selectedDay.toLowerCase()];
-  
+
     if (targetDay === undefined) {
       return "Invalid day of the week!";
     }
-  
+
     const daysUntilNext = (targetDay - todayDayOfWeek + 7) % 7 || 7;
-  
+
     const nextDate = new Date(today);
     nextDate.setDate(today.getDate() + daysUntilNext);
-    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-    return nextDate.toLocaleDateString('en-US', options);
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return nextDate.toLocaleDateString("en-US", options);
   }
-  
+
   const renderDayOptions = () => {
     const filteredDaysOfWeek = daysOfWeek.filter((day) =>
-      skipWeekends ? day.key !== 'Saturday' && day.key !== 'Sunday' : true
+      skipWeekends ? day.key !== "Saturday" && day.key !== "Sunday" : true
     );
-  
+
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {filteredDaysOfWeek.map((day) => (
           <div key={day.key}>
             <label>{day.key}</label>
@@ -135,11 +132,20 @@ const NextModal = (props) => {
       </div>
     );
   };
-  
-  
+
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const renderCalendarForMonth = () => {
@@ -156,12 +162,11 @@ const NextModal = (props) => {
           showFullMonthYearPicker={true}
           minDate={today}
           maxDate={new Date(today.getFullYear(), 11, 31)}
-          inline 
+          inline
         />
       </div>
     );
   };
-
 
   const setYear = (option) => {
     if (option === "last-day-year") {
@@ -207,24 +212,18 @@ const NextModal = (props) => {
         <option value="first-day-next-year">First Day of Next Year</option>
         <option value="custom">Custom</option>
       </select>
-      {yearOption === 'custom' && 
-      renderCalendarForMonth()
-      }
+      {yearOption === "custom" && renderCalendarForMonth()}
     </div>
   );
 
-  
   const setQuar = (option) => {
-    if (option === "last-day-completed-quarter") 
-      {
-      const lastDay = getLastDayOfCompletedQuarter()
+    if (option === "last-day-completed-quarter") {
+      const lastDay = getLastDayOfCompletedQuarter();
       setScheduleDate(lastDay);
-    } else if (option === "first-day-next-quarter") 
-      {
-      const firstDay = getFirstDayOfNextQuarter()
+    } else if (option === "first-day-next-quarter") {
+      const firstDay = getFirstDayOfNextQuarter();
       setScheduleDate(firstDay);
-    } else if (option === "custom") 
-    {
+    } else if (option === "custom") {
       setScheduleDate(customDate);
     }
     setQuarterOption(option);
@@ -256,60 +255,75 @@ const NextModal = (props) => {
     <div>
       <select value={quarterOption} onChange={(e) => setQuar(e.target.value)}>
         <option value="">--Select Option--</option>
-        <option value="last-day-completed-quarter">Last Day of Completed Quarter</option>
-        <option value="first-day-next-quarter">First Day of Next Quarter</option>
+        <option value="last-day-completed-quarter">
+          Last Day of Completed Quarter
+        </option>
+        <option value="first-day-next-quarter">
+          First Day of Next Quarter
+        </option>
         <option value="custom">Custom</option>
       </select>
-      {quarterOption === 'custom' && renderCalendarForMonth()}
+      {quarterOption === "custom" && renderCalendarForMonth()}
     </div>
   );
-
 
   return (
     <>
       <div className="modal-overlay">
         <div className="modal-content">
-          <h3>Selected Reports and Emails</h3>
-
-          <ul className='selected-report'>Selected Reports:
-            {Object.keys(selectedReports).map((key) => selectedReports[key] &&
-             <li key={key} className='sel-report-li'>
-              {key} Report</li>)}
+          <h3 className="title">Schedule Reports</h3>
+          <ul className="selected-report">
+            Selected Reports:
+            {Object.keys(selectedReports).map(
+              (key) =>
+                selectedReports[key] && (
+                  <li key={key} className="sel-report-li">
+                    {key } Report
+                  </li>
+                )
+            )}
           </ul>
-          
-          { selectedReports["Vehicle Wise"] && 
-          <ul className='selected-vehicles'> Selected Vehicles:
-            {selectedVehicle?.selected.length > 0 ?
-              (selectedVehicle.selected.map(vehicle => (
-                <li key={vehicle.vin} className='sel-vehicle-li'>
-                  {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
-                </li>
-              ))
+
+          {selectedReports["Vehicle Wise"] && (
+            <ul className="selected-vehicles">
+              {" "}
+              Selected Vehicles:
+              {selectedVehicle?.selected.length > 0 ? (
+                selectedVehicle.selected.map((vehicle) => (
+                  <li key={vehicle.vin} className="sel-vehicle-li">
+                    {vehicle.vin} - {vehicle.registration_number} (
+                    {vehicle.branch})
+                  </li>
+                ))
               ) : (
                 <li>No Vehicles Found</li>
               )}
-          </ul>
-}
-         
+            </ul>
+          )}
 
-          <ul className='entered-emails'>Entered Emails: {emailList.map((email) => 
-            <li key={email} className='en-li'>
-              {email}
-              </li>)}
-              </ul>
+          <ul className="entered-emails">
+            Entered Emails:{" "}
+            {emailList.map((email) => (
+              <li key={email} className="en-li">
+                {email}
+              </li>
+            ))}
+          </ul>
 
           <div>
             <p>Select Time Interval</p>
             <ul>
-              <li style={{ display: 'flex'}}>
+              <li style={{ display: "flex" }}>
                 {timeOfSchedule.map((option) => (
-                  <li key={option.value} className='time-radio'>
+                  <li key={option.value} className="time-radio">
                     <label>
                       <input
-                        type='radio'
+                        type="radio"
                         value={option.value}
                         checked={time === option.value}
-                        onChange={() => { handleTimeChange(option.value); }}
+                        onChange={() => {
+                          handleTimeChange(option.value);
+                        }}
                       />
                       {option.key}
                     </label>
@@ -318,26 +332,30 @@ const NextModal = (props) => {
               </li>
             </ul>
 
-            {reportType  && 
-            (
+            {reportType && (
               <div>
-                <input type="radio" value='skip-weekends' 
-                checked={skipWeekends === true} 
-                onChange={handleSkipWeekendsToggle} />
-                <label className='skip-weekends'>Skip Weekends: </label>
+                <input
+                  type="radio"
+                  value="skip-weekends"
+                  checked={skipWeekends === true}
+                  onChange={handleSkipWeekendsToggle}
+                />
+                <label className="skip-weekends">Skip Weekends: </label>
               </div>
             )}
 
             <label>
               <ul>
                 {reportOptions.map((option) => (
-                  <li key={option.value} className='in-radio'>
+                  <li key={option.value} className="in-radio">
                     <label>
                       <input
-                        type='radio'
+                        type="radio"
                         value={option.value}
                         checked={reportType === option.value}
-                        onChange={() => { handleReportTypeChange(option.value) }}
+                        onChange={() => {
+                          handleReportTypeChange(option.value);
+                        }}
                       />
                       {option.label}
                     </label>
@@ -347,23 +365,31 @@ const NextModal = (props) => {
             </label>
           </div>
 
-          {reportType === 'weekly' || reportType === 'biWeekly' ? (
-            renderDayOptions()
-          ) : reportType === 'monthly' ? (
-            renderCalendarForMonth()
-          ) : reportType === 'quarterly' ? (
-            getQuarterOptions()
-          ) : reportType === 'yearly' ? (
-            getYearOptions()
-          ) : null}
+          {reportType === "weekly" || reportType === "biWeekly"
+            ? renderDayOptions()
+            : reportType === "monthly"
+            ? renderCalendarForMonth()
+            : reportType === "quarterly"
+            ? getQuarterOptions()
+            : reportType === "yearly"
+            ? getYearOptions()
+            : null}
 
           {scheduleDate && (
-            <p>Scheduled Date: {moment(scheduleDate).format('MMMM Do YYYY')}</p>
+            <p>Scheduled Date: {moment(scheduleDate).format("MMMM Do YYYY")}</p>
           )}
 
           <div className="modal-actions">
-            <button className='backn-button' onClick={handleBackClick}>Back</button>
-            <button className='done-button' onClick={handleDoneClick} disabled={!selectedDay && !scheduleDate}>Done</button>
+            <button className="backn-button" onClick={handleBackClick}>
+              Back
+            </button>
+            <button
+              className="done-button"
+              onClick={handleDoneClick}
+              disabled={!selectedDay && !scheduleDate}
+            >
+              Done
+            </button>
           </div>
         </div>
       </div>
