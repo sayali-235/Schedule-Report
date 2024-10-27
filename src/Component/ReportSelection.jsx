@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ReportSelection.css';
 import VehicleSearchDropdown from './VehicleSearchDropdown';
 import data from './VehicleData.json';
+import { useLocation } from 'react-router-dom';
 
-const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => {
+const ReportSelection = ({ setSelectedReports, setVehicles, initialSelectedReports, initialSelectedVehicle }) => {
   const vehicleData = data.vehicles;
-  
+  const location = useLocation();
+  const { schedule } = location.state || {};
+  const isEditMode = Boolean(schedule);
+
   const [showVehicleSearch, setShowVehicleSearch] = useState(false);
-  const [selectedVehicles, setSelectedVehicles] = useState([]);
-  
+  const [selectedVehicles, setSelectedVehicles] = useState(initialSelectedVehicle?.selected || []);
+
+  useEffect(() => {
+    if (isEditMode && initialSelectedReports) {
+      setSelectedReports(initialSelectedReports);
+      setShowVehicleSearch(!!initialSelectedReports['Vehicle Wise']); // Use double negation for clarity
+    }
+  }, [isEditMode, initialSelectedReports, setSelectedReports]);
+
   const handleCheckboxChange = (report) => {
-    setSelectedReports((prev) => ({ 
-      ...prev, 
-      [report]: report 
- 
+    setSelectedReports((prev) => ({
+      ...prev,
+      [report]: !prev[report], // Toggle the report selection
     }));
-    
+
     if (report === 'Vehicle Wise') {
-      setShowVehicleSearch(!showVehicleSearch);
+      setShowVehicleSearch((prev) => !prev); // Toggle visibility of vehicle search
     }
   };
 
@@ -25,7 +35,7 @@ const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => 
     setSelectedVehicles(selected);
     setVehicles((prev) => ({
       ...prev,
-      selected
+      selected,
     }));
   };
 
@@ -37,18 +47,18 @@ const ReportSelection = ({setSelectedReports, onVehicleSelect, setVehicles}) => 
           <input
             type="checkbox"
             className="checkbox"
+            checked={initialSelectedReports?.[report] || false}
             onChange={() => handleCheckboxChange(report)}
           />
           <label className="report">{report}</label>
         </div>
       ))}
 
-      {showVehicleSearch && vehicleData.length > 0 && 
-      (
+      {showVehicleSearch && vehicleData.length > 0 && (
         <VehicleSearchDropdown 
-        vehicles={vehicleData } 
-        onVehicleSelect={handleVehicleSelect} 
-        selectedVehicles={selectedVehicles}
+          vehicles={vehicleData} 
+          onVehicleSelect={handleVehicleSelect} 
+          selectedVehicles={selectedVehicles}
         />
       )}
     </div>

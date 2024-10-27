@@ -17,19 +17,22 @@ const VehicleSearchDropdown = ({ vehicles = [], onVehicleSelect }) => {
   };
 
   const handleVehicleSelection = (vehicle) => {
-    const isSelected = selectedVehicles.some((v) => v.vin === vehicle.vin);
-    const updatedVehicles = isSelected
-      ? selectedVehicles.filter((v) => v.vin !== vehicle.vin)
-      : [...selectedVehicles, vehicle];
-    console.log("updated selected vehicles:", updatedVehicles)
-    setSelectedVehicles(updatedVehicles);
-    onVehicleSelect(updatedVehicles);
+    setSelectedVehicles((prevSelectedVehicles) => {
+      const isSelected = prevSelectedVehicles.some((v) => v.vin === vehicle.vin);
+      const updatedVehicles = isSelected
+        ? prevSelectedVehicles.filter((v) => v.vin !== vehicle.vin)
+        : [...prevSelectedVehicles, vehicle];
+      
+      console.log("Updated selected vehicles:", updatedVehicles);
+      onVehicleSelect(updatedVehicles);
+      return updatedVehicles;
+    });
   };
 
   const filteredVehicles = vehicles.filter((vehicle) =>
     (vehicle.vin.toLowerCase().includes(searchTerm.toLowerCase()) ||
       vehicle.registration_number.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (selectedBranch ? vehicle.branch === selectedBranch : true)
+    (!selectedBranch || vehicle.branch === selectedBranch)
   );
 
   const sortedVehicles = filteredVehicles.sort((a, b) =>
@@ -38,12 +41,11 @@ const VehicleSearchDropdown = ({ vehicles = [], onVehicleSelect }) => {
 
   return (
     <div className="vehicle-search-dropdown">
-      <label htmlFor="branchDropdown">Select Branch:</label>
+       
       <select id="branchDropdown" value={selectedBranch} onChange={handleBranchChange}>
         <option value="">All</option>
-        {branches.map((branch, index) => (
-          <option key={index} 
-          value={branch}>
+        {branches.map((branch) => (
+          <option key={branch} value={branch}>
             {branch}
           </option>
         ))}
@@ -71,7 +73,7 @@ const VehicleSearchDropdown = ({ vehicles = [], onVehicleSelect }) => {
             </li>
           ))
         ) : (
-          <li>No vehicles found.</li> 
+          <li>No vehicles found.</li>
         )}
       </ul>
     </div>

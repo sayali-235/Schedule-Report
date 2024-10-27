@@ -1,0 +1,60 @@
+.edit-schedule-container {
+    width: 565px;
+    height: 287px;
+    top: 2658px;
+    left: 1957px;
+    border-radius: 10px;
+    border: 3px solid #0f0f11;
+
+
+}
+
+.edit-s {
+    width: 173px;
+    height: 27px;
+    top: 32px;
+    left: 40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27.24px;
+    padding: 15px;
+   
+
+}
+
+.footer {
+    width: 227px;
+    height: 40px;
+    margin-left: 250px;
+    margin-top: 22px;
+
+}
+
+.edit-button {
+    width: 111px;
+    height: 40px;
+    border-radius: 6px;
+    padding: 7.5 24 7.5 24;
+    margin-left: 15px;
+    background: #101B73;
+
+}
+
+.cancel {
+    width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #101B73;
+    padding: 7.5 24 7.5 24;
+    background: #FFFFFF;
+
+}
+
+.schedule-item {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    justify-content: space-between;
+
+
+}

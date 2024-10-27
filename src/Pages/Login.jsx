@@ -8,10 +8,10 @@ import './Login.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const currentUser = useSelector((state) => state.auth.currentUser);
+  const { isAuthenticated, currentUser } = useSelector((state) => state.auth);  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,12 +20,8 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated && currentUser) {
-      const storedData = localStorage.getItem(currentUser.email);
-      if (storedData) {
-        navigate('/edit-schedule');  
-      } else {
-        navigate('/home'); 
-      }
+      const redirectPath = localStorage.getItem(currentUser.email) ? '/edit-schedule' : '/home';
+      navigate(redirectPath);  
     }
   }, [isAuthenticated, navigate, currentUser]);
 

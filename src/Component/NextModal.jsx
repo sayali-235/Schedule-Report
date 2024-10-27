@@ -4,12 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import SummaryModal from "./SummaryModal";
 import "./NextModal.css";
+import { useLocation } from "react-router-dom";
 
 const NextModal = (props) => {
   const { emailList, selectedReports, onBack, selectedVehicle } = props;
 
+  const location = useLocation();
+  const { schedule } = location.state || {}; // Get schedule from location state
+  const isEditMode = Boolean(schedule);
+
   const [scheduleDate, setScheduleDate] = useState(null);
-  const [reportType, setReportType] = useState();
+  const [reportType, setReportType] = useState(null);
   const [selectedDay, setSelectedDay] = useState("");
   const [skipWeekends, setSkipWeekends] = useState(false);
   const [quarterOption, setQuarterOption] = useState("");
@@ -21,6 +26,30 @@ const NextModal = (props) => {
   console.log("props: ", props);
 
   useEffect(() => {
+    if (isEditMode) {
+      // Set initial values from the existing schedule only once, if editing
+      setScheduleDate(
+        schedule.scheduleDate
+          ? moment(schedule.scheduleDate).format("DD MMM YYYY")
+          : null
+      );
+      setReportType(schedule.reportType || null);
+      setSelectedDay(schedule.selectedDay || "");
+      setSkipWeekends(schedule.skipWeekends || false);
+      setTime(schedule.time || false);
+    }
+  }, [isEditMode, schedule]);
+
+  const handleDateChange = (date) => {
+    setScheduleDate(date);
+  };
+
+  useEffect(() => {
+    // Reset schedule date on report type change for fresh schedules
+    if (!isEditMode) {
+      setScheduleDate(null);
+    }
+
     if (reportType === "yearly") {
       getLastDayOfCurrentYear();
       getFirstDayOfCurrentYear();
@@ -28,7 +57,7 @@ const NextModal = (props) => {
       getLastDayOfCompletedQuarter();
       getFirstDayOfNextQuarter();
     }
-  }, [reportType]);
+  }, [reportType, isEditMode]);
 
   const handleTimeChange = (option) => {
     setTime(option);
@@ -115,19 +144,18 @@ const NextModal = (props) => {
     return (
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {filteredDaysOfWeek.map((day) => (
-          <div key={day.key}>
-            <label>{day.key}</label>
-            <input
-              type="radio"
-              value={day.value}
-              name="day"
-              checked={selectedDay === day.value}
-              onChange={() => {
-                setSelectedDay(day.value);
-                setScheduleDate(getNextDayOfWeek(day.value));
-              }}
-            />
-          </div>
+          <button
+            key={day.key}
+            onClick={() => {
+              setSelectedDay(day.value);
+              setScheduleDate(getNextDayOfWeek(day.value));
+            }}
+            className={`day-button ${
+              selectedDay === day.value ? "selected" : ""
+            }`}
+          >
+            {day.key}
+          </button>
         ))}
       </div>
     );
@@ -155,7 +183,7 @@ const NextModal = (props) => {
         <h3>Select Schedule Date:</h3>
         <DatePicker
           selected={scheduleDate}
-          onChange={(date) => setScheduleDate(date)}
+          onChange={handleDateChange}
           filterDate={(date) => (skipWeekends ? !isWeekend(date) : true)}
           dateFormat="MMMM d, yyyy"
           showMonthYearPicker={false}
@@ -271,65 +299,67 @@ const NextModal = (props) => {
     <>
       <div className="modal-overlay">
         <div className="modal-content">
-          <h3 className="title">Schedule Reports</h3>
-          <ul className="selected-report">
-            Selected Reports:
-            {Object.keys(selectedReports).map(
-              (key) =>
-                selectedReports[key] && (
-                  <li key={key} className="sel-report-li">
-                    {key } Report
-                  </li>
-                )
-            )}
-          </ul>
+          <div>
+            <h3 className="title">Reports</h3>
 
-          {selectedReports["Vehicle Wise"] && (
-            <ul className="selected-vehicles">
-              {" "}
-              Selected Vehicles:
-              {selectedVehicle?.selected.length > 0 ? (
-                selectedVehicle.selected.map((vehicle) => (
-                  <li key={vehicle.vin} className="sel-vehicle-li">
-                    {vehicle.vin} - {vehicle.registration_number} (
-                    {vehicle.branch})
-                  </li>
-                ))
-              ) : (
-                <li>No Vehicles Found</li>
+            <ul className="selected-report">
+              Selected Reports:
+              {Object.keys(selectedReports).map(
+                (key) =>
+                  selectedReports[key] && (
+                    <li key={key} className="sel-report-li">
+                      {key} Report
+                    </li>
+                  )
               )}
             </ul>
-          )}
+          </div>
 
-          <ul className="entered-emails">
-            Entered Emails:{" "}
-            {emailList.map((email) => (
-              <li key={email} className="en-li">
-                {email}
-              </li>
-            ))}
-          </ul>
+          <div>
+            {selectedReports["Vehicle Wise"] && (
+              <ul className="selected-vehicles">
+                {" "}
+                Selected Vehicles:
+                {selectedVehicle?.selected.length > 0 ? (
+                  selectedVehicle.selected.map((vehicle) => (
+                    <li key={vehicle.vin} className="sel-vehicle-li">
+                      {vehicle.vin} - {vehicle.registration_number} (
+                      {vehicle.branch})
+                    </li>
+                  ))
+                ) : (
+                  <li>No Vehicles Found</li>
+                )}
+              </ul>
+            )}
+          </div>
+
+          <div>
+            <ul className="entered-emails">
+              Entered Emails:{" "}
+              {emailList.map((email) => (
+                <li key={email} className="en-li">
+                  {email}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div>
             <p>Select Time Interval</p>
-            <ul>
-              <li style={{ display: "flex" }}>
-                {timeOfSchedule.map((option) => (
-                  <li key={option.value} className="time-radio">
-                    <label>
-                      <input
-                        type="radio"
-                        value={option.value}
-                        checked={time === option.value}
-                        onChange={() => {
-                          handleTimeChange(option.value);
-                        }}
-                      />
-                      {option.key}
-                    </label>
-                  </li>
-                ))}
-              </li>
+            <ul style={{ display: "flex", listStyleType: "none", padding: 0 }}>
+              {timeOfSchedule.map((option) => (
+                <li key={option.value} style={{ margin: "0 10px" }}>
+                  <button
+                    className={`time-button ${
+                      time === option.value ? "selected" : ""
+                    }`}
+                    onClick={() => handleTimeChange(option.value)}
+                  >
+                    {option.key}
+                  </button>
+                </li>
+              ))}
             </ul>
 
             {reportType && (
@@ -402,7 +432,11 @@ const NextModal = (props) => {
           scheduleDate={scheduleDate}
           time={time}
           skipWeekends={skipWeekends}
+          reportType={reportType}
+          selectedDay={selectedDay}
           onClose={() => setShowSummaryModal(false)}
+          isEditMode={isEditMode}
+          existingSchedule={isEditMode ? schedule : null}
         />
       )}
     </>

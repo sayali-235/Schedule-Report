@@ -9,7 +9,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  
+  
 }
 
 
@@ -17,10 +18,14 @@
   background: white;
   border-radius: 8px;
   padding: 20px;
-  max-width: 400px;
-  width: 100%;
+   width: 565;
+   height: 287;
+   top: 2658px;
+   left: 1957px;
+   border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  z-index: 2001;
+  
+   
 }
 
 .nested-modal-content h3 {
@@ -39,34 +44,31 @@
 
 
 .modal-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  width: 227px;
+  height: 40px;
+  margin-left: 250px;
+  margin-top: 40px;
 }
 
 
 .back-button {
-   
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #107ffd;
-  color: white;
-  font-size: 14px;
-  width: 20%;
-  margin-left: 50%;
+  width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #101B73;
+  padding: 7.5 24 7.5 24;
+  background: #FFFFFF;
+
   
 }
 .confirm-button {
    
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #107ffd;
-  color: white;
-  font-size: 14px;
-  width: 20%;
-  margin-right: 10px;
+  width: 111px;
+  height: 40px;
+  border-radius: 6px;
+  padding: 7.5 24 7.5 24;
+  margin-left: 15px;
+  background: #101B73;
 }
 
 

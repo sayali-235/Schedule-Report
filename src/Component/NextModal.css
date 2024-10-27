@@ -1,133 +1,176 @@
  
 .modal-overlay {
-  position: fixed;
+  position: fixed;              
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;                  
+  height: 100%;                 
+  background: rgba(0, 0, 0, 0.5);  
+  display: flex;                
+  justify-content: center;       
+  align-items: center;           
 }
-
+ 
 .modal-content {
-  background: rgb(250, 242, 242);
-  padding: 20px;
-  border-radius: 8px;
-  width: 700px;
-  height: 700px;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
+  background: rgb(250, 242, 242);  
+  padding: 20px;                 
+  border-radius: 8px;             
+  width: 700px;                  
+  height: 700px;                  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+  overflow-y: auto;               
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
 }
-  .modal-content h3 {
-    
-    margin-top: 0;
-    margin-bottom: 20px;
-     
-  }
-  
-  .modal-content ul {
-    list-style-type: none;
-    padding: 0;
-    
-  }
-  
-  .modal-content ul li {
-    margin-bottom: 10px;
-  }
-  
-  .modal-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
- 
-  .backn-button {
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #0a0ef1;
-    color: white;
-    font-size: 14px;
-    width: 20%;
-    margin-left: 50%;
-    
-  }
-  .done-button {
-     
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #0686f0;
-    color: white;
-    font-size: 14px;
-    width: 20%;
-    margin-right: 10px;
-  }
-  
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  button:hover:not(:disabled) {
-    background-color: #0056b3;
-  }
-  
- 
-  .react-datepicker-wrapper {
-    display: inline-block;
-  }
-  
-  .react-datepicker__input-container input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  .react-datepicker {
-    font-size: 14px;
-  }
-  
-  .in-radio{
-    display: flex;
-    font-size: 15px;
-    flex: 1;
-  }
-  
-  .morning {
-    margin-left: 20px ;  
-  }
- .evening{
-  justify-content: space-between;
-  margin-left: 20px ;
- }
 
- .selected-report {
-    font-size: 18px;
-    
- }
- .selected-vehicles {
-  font-size: 18px;
+ 
+.modal-content h3 {
+  margin-top: 0;                  
+  margin-bottom: 20px;           
+  color: #242424;                 
+  font-weight: 700;                
+  font-size: 25px;               
+  line-height: 27.25px;          
 }
+
+ 
+.modal-content ul {
+  list-style-type: none;          
+  padding: 0;                    
+}
+
+.modal-content ul li {
+  margin-bottom: 10px;           
+}
+
+ 
+.modal-actions {
+  display: flex;                
+  justify-content: space-between;  
+            
+  width: 205px;
+  height: 40px;
+  top: 827px;
+   
+  gap: 16px;
+  margin-left: 320px;
+}
+ 
+.backn-button {
+            
+  border: 1px solid #101B73;
+  border-radius: 6px;        
+  cursor: pointer;                   
+  background: #FFFFFF;     
+  font-size: 14px; 
+  height: 40px;              
+  width: 100px;                     
+   padding: 7.5 24 7.5 24;
+   gap: 16px;            
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  
+}
+
+ 
+.done-button {
+   width: 89px;
+   height: 40px;
+   border-radius: 6px;
+   padding: 7.5 24 7.5 24;
+   gap: 16PX; 
+   background: #101B73;
+     
+   
+   
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  
+}
+
+ 
+button:disabled {
+  background-color: #ccc;       
+  cursor: not-allowed;           
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;    
+}
+
+/* Date Picker Styles */
+.react-datepicker-wrapper {
+  display: inline-block;         /* Inline block for date picker */
+}
+
+.react-datepicker__input-container input {
+  width: 100%;                  /* Full width */
+  padding: 10px;                /* Padding inside input */
+  font-size: 14px;              /* Font size */
+  margin-top: 10px;             /* Space above input */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Font stack */
+}
+
+.react-datepicker {
+  font-size: 14px;              /* Font size for the date picker */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Font stack */
+}
+
+/* Day Buttons Styles */
+.day-button {
+  border: none;                  /* No border */
+  border-radius: 4px;           /* Rounded corners */
+  cursor: pointer;               /* Pointer cursor on hover */
+  background-color: #C4C4C4;     /* Default background */
+  color: #000;                   /* Default text color */
+  font-size: 14px;               /* Font size */
+  padding: 10px 15px;            /* Padding */
+  margin: 0 5px;                /* Margin between buttons */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.day-button.selected {
+  background-color: #0a0ef1;     /* Background for selected day */
+  color: white;                   /* Text color for selected day */
+}
+
+/* Time Options Styles */
+.morning {
+  margin-left: 20px;            /* Space to the left */
+}
+
+.evening {
+  justify-content: space-between; /* Space between elements */
+  margin-left: 20px;            /* Space to the left */
+}
+
+/* Selected Reports, Vehicles, and Emails */
+.selected-report,
+.selected-vehicles,
 .entered-emails {
-  font-size: 18px;
+  font-size: 18px;              /* Font size for lists */
 }
-.sel-report-li {
-  font-size: 15px;
-}
-.sel-vehicle-li {
-  font-size: 15px;
-}
+
+.sel-report-li,
+.sel-vehicle-li,
 .en-li {
-  font-size: 15px;
+  font-size: 15px;              /* Font size for list items */
 }
 
+/* Time Button Styles */
+.time-button {
+  border: none;                  /* No border */
+  border-radius: 4px;           /* Rounded corners */
+  cursor: pointer;               /* Pointer cursor on hover */
+  background-color: #C4C4C4;     /* Default background */
+  color: #000;                   /* Default text color */
+  font-size: 14px;               /* Font size */
+  padding: 10px 15px;            /* Padding */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
 
+/* Selected State */
+.time-button.selected {
+  background-color: #0a0ef1;     /* Background for selected time */
+  color: white;                   /* Text color for selected time */
+}
 
- 
+/* Hover State */
+.time-button:hover {
+  background-color: #0686f0;      /* Change background on hover */
+}

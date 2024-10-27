@@ -2,20 +2,32 @@ import React from 'react';
 import moment from 'moment';
 import './SummaryModal.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate, useLocation } from 'react-router-dom';  
 import { summaryData } from '../redux/summarySlice';
 import { logout } from '../redux/authSlice';  
 
 const SummaryModal = (props) => {
-  const { emailList, selectedReports, scheduleDate,   skipWeekends, onClose, selectedVehicle, time } = props;
+  const location = useLocation();
+  const { schedule } = location.state || {};
+
+  const {
+    emailList, 
+    selectedReports, 
+    scheduleDate, 
+    skipWeekends, 
+    onClose, 
+    selectedVehicle, 
+    time,
+    isEditMode,
+    existingSchedule
+    
+  } = props;
+
   const dispatch = useDispatch();
-  
   const navigate = useNavigate();  
   const currentUser = useSelector((state) => state.auth.currentUser);
 
-  const handleBackClick = () => {
-    onClose();
-  };
+  const handleBackClick = () => onClose();
 
   const handleConfirmClick = () => {
     if (!currentUser?.email) {
@@ -23,9 +35,13 @@ const SummaryModal = (props) => {
       return;
     }
 
+    const cleanSelectedReports = Object.fromEntries(
+      Object.entries(selectedReports).filter(([_, value]) => value)
+    );
+
     const summary = {
       emailList,
-      selectedReports,
+      selectedReports: cleanSelectedReports,
       scheduleDate,
       skipWeekends,
       selectedVehicle,
@@ -35,31 +51,48 @@ const SummaryModal = (props) => {
     dispatch(summaryData(summary));
 
     const storedSummaries = JSON.parse(localStorage.getItem(currentUser.email)) || [];
-    storedSummaries.push(summary);
-    localStorage.setItem(currentUser.email, JSON.stringify(storedSummaries));
 
-    
-    alert('Schedule confirmed! You will now be logged out.');
+    if (isEditMode && existingSchedule) {
+      const updatedSummaries = storedSummaries.map(existing => 
+        existing.scheduleDate === existingSchedule.scheduleDate ? summary : existing
+      );
+      localStorage.setItem(currentUser.email, JSON.stringify(updatedSummaries));
+    } else {
+      const existingScheduleOnDate = storedSummaries.some(existing => 
+        existing.scheduleDate === scheduleDate
+      );
+
+      if (existingScheduleOnDate) {
+        alert('A schedule already exists for this date.');
+        return;
+      }
+
+      storedSummaries.push(summary);
+      localStorage.setItem(currentUser.email, JSON.stringify(storedSummaries));
+    }
+
+    alert('Schedule confirmed! Logging out now.');
     dispatch(logout(!currentUser));
-    navigate('/');
-    window.location.reload() 
+    navigate('/login');
     onClose();
-
-     
+    window.location.reload();
   };
 
   return (
     <div className="nested-modal-overlay">
       <div className="nested-modal-content">
-        <h3>Schedule Summary</h3>
+        <h3>{isEditMode ? 'Edit Schedule' : 'Schedule Summary'}</h3>
         <ul>
           <li><strong>Emails:</strong> {emailList.join(', ')}</li>
-          <li><strong>Reports:</strong> {Object.keys(selectedReports).filter(key => selectedReports[key]).join(', ')}</li>
+          <li>
+            <strong>Reports:</strong> 
+            {Object.keys(selectedReports)
+              .filter((key) => selectedReports[key])
+              .join(', ') || 'None'}
+          </li>
           <li>
             <strong>Selected Vehicles:</strong>
-            {selectedVehicle && 
-            selectedVehicle.selected && 
-            selectedVehicle.selected.length > 0
+            {selectedVehicle?.selected?.length > 0 
               ? selectedVehicle.selected.map(vehicle => (
                   <div key={vehicle.vin}>
                     {vehicle.vin} - {vehicle.registration_number} ({vehicle.branch})
@@ -67,7 +100,7 @@ const SummaryModal = (props) => {
                 ))
               : 'None'}
           </li>
-          <li><strong>Schedule On:</strong> {moment(scheduleDate).format(' Do MMMM YYYY')}</li>
+          <li><strong>Schedule On:</strong> {moment(scheduleDate).format('Do MMMM YYYY')}</li>
           <li><strong>Schedule Time:</strong> {time}</li>
           <li><strong>Skip Weekends:</strong> {skipWeekends ? 'Yes' : 'No'}</li>
         </ul>

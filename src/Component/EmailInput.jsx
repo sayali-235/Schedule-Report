@@ -1,51 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './EmailInput.css';
 
-const EmailInput = (props) => {
-  const { emailList, setEmailList } = props;
+const EmailInput = ({ emailList, setEmailList }) => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
   const [email, setEmail] = useState('');
-  const isvalidEmail = emailRegex.test(email);
-
-  useEffect(() => {
-
-  }, [emailList]);
+  const isValidEmail = emailRegex.test(email);
 
   const handleAddEmail = () => {
     if (!email) {
-      alert('Please enter an email address.');
-      return;
-  }
-    else if (email && !emailList.includes(email)) {
-      if (emailList.length >= 5) {
-        alert('You can only add up to 5 email addresses.');
-        return;
-      }
-      if (isvalidEmail) {
-        setEmailList([...emailList, email]);
-        setEmail('');
-      } else {
-        alert('Please add a valid email.');
-      }
+      return alert('Please enter an email address.');
+    }
+    if (emailList.length >= 5) {
+      return alert('You can only add up to 5 email addresses.');
+    }
+    if (!emailList.includes(email) && isValidEmail) {
+      setEmailList((prevList) => [...prevList, email]);
+      setEmail('');
+    } else {
+      alert(!isValidEmail ? 'Please add a valid email.' : 'Email already exists.');
     }
   };
 
   const handleRemoveEmail = (emailToRemove) => {
-    setEmailList(emailList.filter((email) => email !== emailToRemove));
+    setEmailList((prevList) => prevList.filter((email) => email !== emailToRemove));
   };
-  const Email='Add';
-  const addEmail=()=>{
-    if(Email=='Add'){
-      Email='cancel'
-    }else{
-      Email='Add'
-    }
-  }
 
   return (
     <div>
-      <div className="email-input-container"><div className='email-input'>
+      <div className="email-input-container">
+        <div className="email-input">
           <label>Enter email ids</label>
           <input
             type="text"
@@ -53,10 +36,9 @@ const EmailInput = (props) => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <button className='add-button' onClick={handleAddEmail}>+ Add</button>
+        <button className="add-button" onClick={handleAddEmail}>+ Add</button>
       </div>
-      {
-        emailList?.length !== 0 &&
+      {emailList.length > 0 && (
         <div className="email-list-box">
           {emailList.map((emailItem, index) => (
             <div key={index} className="email-chip">
@@ -65,7 +47,7 @@ const EmailInput = (props) => {
             </div>
           ))}
         </div>
-      }
+      )}
     </div>
   );
 };
